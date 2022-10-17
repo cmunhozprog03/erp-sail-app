@@ -15,6 +15,15 @@ return new class extends Migration
     {
         Schema::create('subcategories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained('categories');
+
+            $table->string('name')->unique();
+            $table->string('url')->unique();
+            $table->text('description')->nullable();
+            $table->string('picture')->nullable();
+            $table->string('ticon')->nullable();
+            $table->enum('active', [1, 2])->default(1);
+            
             $table->timestamps();
         });
     }

@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
+
 
 class CategoryObserver
 {
@@ -12,9 +14,9 @@ class CategoryObserver
      * @param  \App\Models\Category  $category
      * @return void
      */
-    public function created(Category $category)
+    public function creating(Category $category)
     {
-        //
+        $category->url = Str::slug($category->name);
     }
 
     /**
@@ -23,9 +25,9 @@ class CategoryObserver
      * @param  \App\Models\Category  $category
      * @return void
      */
-    public function updated(Category $category)
+    public function updating(Category $category)
     {
-        //
+        $category->url = Str::slug($category->name);
     }
 
     /**
