@@ -27,7 +27,8 @@ class StoreUpdateCategory extends FormRequest
         return [
             'name' => "required|min:3|max:255|string|unique:categories,name,${url},url",
             'description' => 'nullable|min:3|max:2000',
-            'picture' => 'nullable|image|max:2048|mimes:png,jpg,png,ico'
+            'picture' => 'nullable|image|max:2048|mimes:png,jpg,png,ico',
+            'icon' => 'nullable|image|max:512|mimes:png,jpg,png,ico',
         ];
     }
 
@@ -39,7 +40,9 @@ class StoreUpdateCategory extends FormRequest
             'name.max' => 'Este campo deve conter no máximo 255 caracteres.',
             'description.max' => 'Este campo deve conter no máximo 2000 caracteres.',
             'picture.image' => 'Envio somente de imagens nos formatos: jpeg, jpg, png, ico.',
-            'pictura.max' => 'Imagens até 2MB'
+            'picture.max' => 'Imagens até 2MB',
+            'icon.image' => 'Envio somente de imagens nos formatos: jpeg, jpg, png, ico.',
+            'icon.max' => 'Imagens até 512Kb'
         ];
     }
 }

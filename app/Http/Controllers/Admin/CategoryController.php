@@ -3,10 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateCategory;
+use App\Models\Category;
 use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\returnSelf;
 
 class CategoryController extends Controller
 {
+
+    protected $model;
+
+    public function __construct(Category $category)
+    {
+        $this->model = $category;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = $this->model->orderBy('name', 'ASC')->paginate();
+        return view('admin.categories.index');
     }
 
     /**
@@ -24,7 +36,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -33,9 +45,22 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateCategory $request)
     {
-        //
+        $data = $request->all();
+
+        If($request->picture){
+            $data['picture'] = $request->picture->store('categories');
+        }
+
+        if($request->icon){
+            $data['icon'] = $request->icon->store('categories/icons');
+        }
+        
+
+        Category::create($data);
+
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -52,24 +77,33 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $url
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($url)
     {
-        //
+        
+        $category = Category::where('url', $url)->first();
+        
+        if(!$category)
+            return redirect()->back();
+
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $url
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateCategory $request, $url)
     {
-        //
+        $category = Category::where('url', $url)->first();
+        
+        if(!$category)
+            return redirect()->back();
     }
 
     /**
