@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Models\{
-    Category
+    Category,
+    Subcategory
 };
 use App\Observers\{
-    CategoryObserver
+    CategoryObserver,
+    SubcategoryObserver
 };
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -32,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
         Category::observe(CategoryObserver::class);
+        Subcategory::observe(SubcategoryObserver::class);
     }
 }

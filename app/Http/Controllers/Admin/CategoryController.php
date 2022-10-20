@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateCategory;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -104,6 +105,30 @@ class CategoryController extends Controller
         
         if(!$category)
             return redirect()->back();
+
+        if ($request->hasFile('picture')){
+            if (storage::exists($category->picture)){
+                storage::delete($category->picture);
+            }
+        }
+
+        if ($request->hasFile('icon')){
+            if (storage::exists($category->icon)){
+                storage::delete($category->icon);
+            }
+        }
+
+        If($request->picture){
+            $data['picture'] = $request->picture->store('categories');
+        }
+
+        if($request->icon){
+            $data['icon'] = $request->icon->store('categories/icons');
+        }
+
+        $category->update($data);
+
+        return redirect()->route('admin.categories.index');
     }
 
     /**

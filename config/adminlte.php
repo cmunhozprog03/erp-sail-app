@@ -338,6 +338,10 @@ return [
                     'route'  => 'admin.categories.index',
                 ],
                 [
+                    'text' => 'SUBCATEGORIAS',
+                    'route'  => 'admin.subcategories.index',
+                ],
+                [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [

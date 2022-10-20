@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class SubcategoryController extends Controller
@@ -14,7 +16,9 @@ class SubcategoryController extends Controller
      */
     public function index()
     {
-        //
+        $subcategories = Subcategory::with('category')->get();
+
+        return view('admin.subcategories.index', compact('subcategories'));
     }
 
     /**
@@ -24,7 +28,11 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
-        //
+
+        $categories = Category::pluck('name', 'id');
+        
+
+        return view('admin.subcategories.create', compact('categories'));
     }
 
     /**
