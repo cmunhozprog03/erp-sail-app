@@ -1,4 +1,9 @@
 <div class="form-group">
+  {!! Form::label('category_id', 'Categoria' ) !!}
+  {!! Form::select('category_id', $categories, null, ['class' => 'form-control txt-input-upper']) !!}
+</div>
+
+<div class="form-group">
   {!! Form::label('Nome', null) !!}
   {!! Form::text('name', null, ['class' => 'form-control txt-input-upper
   ']) !!}

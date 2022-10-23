@@ -13,6 +13,8 @@ class SubcategoryComponent extends Component
 
     public $search;
 
+    protected $paginationTheme = "bootstrap";
+
     public function updatingSearch(){
         $this->resetPage();
     }
@@ -20,6 +22,7 @@ class SubcategoryComponent extends Component
     public function render()
     {
         $subcategories = Subcategory::with('category')
+            ->where('name', 'LIKE', '%' . $this->search . '%')
             ->orderBy('name', 'ASC')
             ->paginate(4);
             

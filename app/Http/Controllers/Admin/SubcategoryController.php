@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateSubcategory;
 use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
@@ -41,9 +42,22 @@ class SubcategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateSubcategory $request)
     {
-        //
+        $data = $request->all();
+
+        If($request->picture){
+            $data['picture'] = $request->picture->store('subcategories');
+        }
+
+        if($request->icon){
+            $data['icon'] = $request->icon->store('subcategories/icons');
+        }
+
+        Subcategory::create($data);
+
+        return redirect()->route('admin.subcategories.index');
+
     }
 
     /**
